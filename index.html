@@ -1,0 +1,502 @@
+<!-- ====== TEST INTERACTIVO · 3º ESO · GEOGRAFÍA · TEMA 3 (Sector Primario) · SIN BOTÓN COMPROBAR ====== -->
+<style>
+  :root{
+    --bg:#0b0f14; --card:#10161d; --ink:#eaf2ff; --muted:#8da6c1; --brand:#56b0ff; --ok:#54d39e; --bad:#ff6b6b; --warn:#ffce56;
+    --radius:18px; --shadow:0 12px 30px rgba(0,0,0,.35); --w:980px;
+  }
+  body{background:var(--bg); color:var(--ink); font:16px/1.6 Inter,system-ui,Segoe UI,Roboto,Arial; margin:0; padding:0}
+  .quiz-wrap{max-width:var(--w); margin:0 auto; padding:34px 18px 80px}
+  h1{font-size:clamp(24px,3.2vw,36px); margin:0 0 14px; line-height:1.15; font-weight:800}
+  .lead{color:var(--muted); margin:-4px 0 18px}
+  .card{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:20px; overflow:hidden}
+  .row{display:grid; grid-template-columns:1.1fr .9fr; gap:18px}
+  .row > .card{min-height:220px}
+  .q-title{font-size:18px; font-weight:800; margin:8px 0 8px}
+  .q-sub{color:var(--muted); font-size:14px; margin-top:-2px}
+  .opt{display:flex; gap:10px; align-items:flex-start; padding:12px 14px; margin:10px 0; background:#0f1720; border:1px solid rgba(255,255,255,.06); border-radius:12px; cursor:pointer}
+  .opt input{accent-color:var(--brand); transform:translateY(3px)}
+  .opt:hover{background:#102233}
+  .imgbox{background:#0f1720; border:1px solid rgba(255,255,255,.06); border-radius:16px; height:240px; display:flex; align-items:center; justify-content:center; overflow:hidden}
+  .imgbox img{max-width:100%; max-height:100%; display:block}
+  .imgcap{color:#a9c3dc; font-size:12px; margin-top:6px}
+  .controls{display:flex; gap:10px; align-items:center; margin-top:16px}
+  .btn{padding:10px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.08); background:#102a42; color:#cfe6ff; cursor:pointer; font-weight:700}
+  .btn:hover{filter:brightness(1.08)}
+  .btn.primary{background:linear-gradient(135deg,#4aa3ff,#6ed5ff); color:#00233c; border:none}
+  .btn.ghost{background:transparent}
+  .pill{display:inline-block; font-size:12px; padding:4px 8px; border-radius:999px; border:1px solid rgba(255,255,255,.1); color:#bfe0ff; background:#0e2233}
+  .progress{height:10px; background:#0e1a26; border-radius:999px; overflow:hidden; margin:14px 0 6px; border:1px solid rgba(255,255,255,.06)}
+  .bar{height:100%; width:0%; background:linear-gradient(90deg,#56b0ff,#6ed5ff)}
+  .status{display:flex; justify-content:space-between; color:#9bb6d3; font-size:12px}
+  .feedback{margin-top:10px; font-weight:800}
+  .ok{color:var(--ok)} .bad{color:var(--bad)} .warn{color:var(--warn)}
+  .hidden{display:none}
+  .review .item{padding:12px 14px; background:#0f1720; border:1px solid rgba(255,255,255,.06); border-radius:12px; margin:10px 0}
+  .review .wrong{outline:2px solid var(--bad); outline-offset:-2px}
+  .review b{color:#e6f1ff}
+  .svgimg{width:100%; height:100%}
+</style>
+
+<div class="quiz-wrap">
+  <h1>TEST · Tema 3 — Sector Primario (3º ESO)</h1>
+  <p class="lead">Una pregunta cada vez · 3 opciones · recursos visuales · resultados al final con fallos marcados. Sin pistas intermedias.</p>
+
+  <!-- Progreso -->
+  <div class="card">
+    <div class="status"><span id="stLabel">Preparado</span><span id="stCount"></span></div>
+    <div class="progress"><div class="bar" id="stBar"></div></div>
+  </div>
+
+  <div class="row">
+    <!-- Enunciado / opciones -->
+    <div class="card" id="qCard">
+      <span class="pill" id="qTag">Pregunta</span>
+      <div class="q-title" id="qTitle">—</div>
+      <div class="q-sub" id="qSub">—</div>
+      <div id="mcqBox"></div>
+
+      <div class="controls">
+        <button class="btn ghost" id="btnPrev">← Anterior</button>
+        <button class="btn primary" id="btnNext">Siguiente →</button>
+      </div>
+
+      <div id="perQFeedback" class="feedback hidden"></div>
+    </div>
+
+    <!-- Recurso visual -->
+    <div class="card" id="mediaCard">
+      <div class="imgbox" id="imgWrap">
+        <svg class="svgimg" viewBox="0 0 420 220" id="placeholder">
+          <rect x="0" y="0" width="420" height="220" fill="#0b1622"></rect>
+          <text x="50%" y="50%" fill="#7eaad7" font-size="16" text-anchor="middle" font-family="Inter">Recurso visual o esquema</text>
+        </svg>
+      </div>
+      <div class="imgcap" id="imgCap">Cuando la pregunta lo requiera, verás aquí un mapa, foto o esquema.</div>
+    </div>
+  </div>
+
+  <!-- Resultados -->
+  <div class="card hidden" id="resultCard">
+    <h3>Resultados</h3>
+    <p><b id="scorePct">0%</b> aciertos · <span id="scoreMsg"></span></p>
+    <div class="review" id="reviewList"></div>
+    <div class="controls">
+      <button class="btn" id="btnRetry">Repetir test</button>
+      <button class="btn ghost" id="btnScrollTop">Volver arriba</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===== BANCO DE PREGUNTAS (40) =====
+   Campos: id, tag, type('mcq'|'image-mcq'), title, sub, options[{key,text}], answer('A'|'B'|'C'), media{kind:'svg'|'img', html|src, caption}, explain
+*/
+var QUESTION_BANK = [
+  {id:1, tag:'Concepto', type:'mcq',
+    title:'El sector primario incluye…',
+    sub:'Elige la opción más completa.',
+    options:[{key:'A',text:'Agricultura y ganadería'},{key:'B',text:'Agricultura, ganadería, pesca y explotación forestal'},{key:'C',text:'Industria agroalimentaria y turismo'}],
+    answer:'B', explain:'Obtiene recursos directamente de la naturaleza.'
+  },
+  {id:2, tag:'Importancia', type:'mcq',
+    title:'La actividad más importante del sector primario por población dependiente es…',
+    sub:'', options:[{key:'A',text:'Ganadería'},{key:'B',text:'Agricultura'},{key:'C',text:'Pesca'}],
+    answer:'B', explain:'Cerca del 40% depende de la agricultura.'
+  },
+  {id:3, tag:'Tendencia', type:'mcq',
+    title:'Desde hace décadas, el sector primario mundial…',
+    sub:'', options:[{key:'A',text:'Aumenta su peso en empleo y PIB'},{key:'B',text:'Retrocede en empleo y PIB relativos'},{key:'C',text:'Permanece estable'}],
+    answer:'B', explain:'Retrocede frente a industria y servicios.'
+  },
+  {id:4, tag:'Productividad', type:'mcq',
+    title:'El aumento de productividad agraria se relaciona con…',
+    sub:'', options:[{key:'A',text:'Tecnificación y mecanización'},{key:'B',text:'Menos conocimiento'},{key:'C',text:'Más altitud'}],
+    answer:'A', explain:'La tecnología eleva rendimientos.'
+  },
+  {id:5, tag:'Altos ingresos', type:'mcq',
+    title:'En países de altos ingresos, el empleo en el sector primario suele ser…',
+    sub:'', options:[{key:'A',text:'1–3% del empleo'},{key:'B',text:'≈20%'},{key:'C',text:'>50%'}],
+    answer:'A', explain:'PIB <2% y productividad muy alta.'
+  },
+  {id:6, tag:'Medianos ingresos', type:'mcq',
+    title:'En países de ingresos medios, la aportación al PIB del sector es…',
+    sub:'', options:[{key:'A',text:'<2%'},{key:'B',text:'~8% (o algo menos)'},{key:'C',text:'>20%'}],
+    answer:'B', explain:'Con empleo medio cercano al 29%.'
+  },
+  {id:7, tag:'Bajos ingresos', type:'mcq',
+    title:'En países de bajos ingresos, el empleo en el sector primario…',
+    sub:'', options:[{key:'A',text:'<5%'},{key:'B',text:'~20%'},{key:'C',text:'~60% (y >80% en los más pobres)'}],
+    answer:'C', explain:'Y aporta >20% del PIB.'
+  },
+  {id:8, tag:'Contrastes', type:'mcq',
+    title:'Los contrastes nacionales del sector primario se deben sobre todo a…',
+    sub:'', options:[{key:'A',text:'Momento/forma de industrialización'},{key:'B',text:'Huso horario'},{key:'C',text:'Color del suelo'}],
+    answer:'A', explain:'Industrialización distinta por países.'
+  },
+  {id:9, tag:'Mercado', type:'mcq',
+    title:'La agricultura de mercado busca principalmente…',
+    sub:'', options:[{key:'A',text:'Autoconsumo'},{key:'B',text:'Maximizar beneficio con venta'},{key:'C',text:'Evitar tecnología'}],
+    answer:'B', explain:'Se orienta a la venta.'
+  },
+  {id:10, tag:'Efectos', type:'mcq',
+    title:'Consecuencia positiva frecuente de la agricultura de mercado:',
+    sub:'', options:[{key:'A',text:'Precios altos por escasez'},{key:'B',text:'Bajada de precios por excedentes'},{key:'C',text:'Sin mayoristas'}],
+    answer:'B', explain:'Alta productividad → excedentes.'
+  },
+  {id:11, tag:'Clima', type:'mcq',
+    title:'Límite climático típico para la agricultura:',
+    sub:'', options:[{key:'A',text:'Frío extremo'},{key:'B',text:'Brisas suaves'},{key:'C',text:'Cielos despejados'}],
+    answer:'A', explain:'También calor extremo, humedad excesiva y aridez.'
+  },
+  {id:12, tag:'Clima', type:'mcq',
+    title:'La aridez limita porque…',
+    sub:'', options:[{key:'A',text:'Baja el oxígeno del aire'},{key:'B',text:'Precipitaciones escasas e irregulares'},{key:'C',text:'Genera más setos'}],
+    answer:'B', explain:'El agua debe distribuirse durante el ciclo.'
+  },
+  {id:13, tag:'Relieve', type:'mcq',
+    title:'Altitud más favorable, en principio, para cultivar:',
+    sub:'', options:[{key:'A',text:'<200 m'},{key:'B',text:'1500–2500 m'},{key:'C',text:'>3000 m'}],
+    answer:'A', explain:'La temperatura disminuye con la altitud.'
+  },
+  {id:14, tag:'Relieve', type:'mcq',
+    title:'Pendiente máxima habitual para cultivo:',
+    sub:'', options:[{key:'A',text:'≈12°'},{key:'B',text:'≈25°'},{key:'C',text:'≈45°'}],
+    answer:'A', explain:'Llanuras y suaves pendientes facilitan mecanización.'
+  },
+  {id:15, tag:'Relieve', type:'image-mcq',
+    title:'Técnica que permite cultivar laderas reduciendo la erosión:',
+    sub:'', options:[{key:'A',text:'Terrazas o bancales'},{key:'B',text:'Inundación'},{key:'C',text:'Barbecho'}],
+    answer:'A', explain:'Bancales reducen escorrentía.',
+    media:{kind:'svg',caption:'Plataformas horizontales en ladera.',
+      html:'<svg class="svgimg" viewBox="0 0 420 220"><rect width="420" height="220" fill="#0b1622"></rect><g transform="translate(30,30)"><polygon points="0,140 360,60 360,160 0,160" fill="#17324a"></polygon><g fill="#275676" stroke="#3b7aa5"><rect x="10" y="120" width="320" height="10"></rect><rect x="30" y="100" width="300" height="10"></rect><rect x="70" y="80" width="260" height="10"></rect></g></g></svg>'}
+  },
+  {id:16, tag:'Suelo', type:'mcq',
+    title:'La textura y porosidad del suelo condicionan…',
+    sub:'', options:[{key:'A',text:'La altitud'},{key:'B',text:'Retención de agua y oxígeno disponible'},{key:'C',text:'El huso horario'}],
+    answer:'B', explain:'Junto con composición y materia orgánica.'
+  },
+  {id:17, tag:'Suelo', type:'mcq',
+    title:'Mejorar un suelo agrícola puede lograrse con…',
+    sub:'', options:[{key:'A',text:'Fertilización/compost, riego y corrección de acidez'},{key:'B',text:'Aumentar la pendiente'},{key:'C',text:'Elevar la altitud'}],
+    answer:'A', explain:'Se mejora textura, fertilidad y pH.'
+  },
+  {id:18, tag:'Espacios', type:'mcq',
+    title:'Regiones no aptas por sí mismas para agricultura:',
+    sub:'', options:[{key:'A',text:'Polos, desiertos y selvas tropicales'},{key:'B',text:'Valles fluviales'},{key:'C',text:'Mesetas templadas'}],
+    answer:'A', explain:'Hoy es posible con invernaderos, pero requiere inversión alta.'
+  },
+  {id:19, tag:'Explotación', type:'mcq',
+    title:'Explotación agraria es…',
+    sub:'', options:[{key:'A',text:'Cualquier área urbana'},{key:'B',text:'Conjunto de tierras/granjas trabajadas por una persona o empresa'},{key:'C',text:'Un huerto escolar'}],
+    answer:'B', explain:'Puede ser agrícola/ganadera/forestal/mixta.'
+  },
+  {id:20, tag:'Parcela', type:'mcq',
+    title:'La parcela es…',
+    sub:'', options:[{key:'A',text:'División elemental del paisaje agrario delimitada por lindes'},{key:'B',text:'Un país'},{key:'C',text:'Un barrio'}],
+    answer:'A', explain:'Extensión rústica continua de un titular.'
+  },
+  {id:21, tag:'Paisaje', type:'image-mcq',
+    title:'Identifica el paisaje: parcelas abiertas, sin cercas, franjas amplias.',
+    sub:'', options:[{key:'A',text:'Openfield'},{key:'B',text:'Bocage'},{key:'C',text:'Plantación'}],
+    answer:'A', explain:'Openfield: hábitat concentrado; grandes llanuras cerealistas.',
+    media:{kind:'svg',caption:'Campos abiertos y extensos.',
+      html:'<svg class="svgimg" viewBox="0 0 420 220"><rect width="420" height="220" fill="#0b1622"></rect><g transform="translate(20,20)"><rect x="0" y="0" width="380" height="160" fill="#19334a" stroke="#2a4e6d"></rect><rect x="10" y="10" width="360" height="30" fill="#2a5b80"></rect><rect x="10" y="50" width="360" height="30" fill="#285474"></rect><rect x="10" y="90" width="360" height="30" fill="#2a5b80"></rect><rect x="10" y="130" width="360" height="20" fill="#285474"></rect></g></svg>'}
+  },
+  {id:22, tag:'Paisaje', type:'image-mcq',
+    title:'Identifica el paisaje: setos/muros delimitan pequeñas parcelas irregulares.',
+    sub:'', options:[{key:'A',text:'Bocage'},{key:'B',text:'Openfield'},{key:'C',text:'Desierto'}],
+    answer:'A', explain:'Bocage: hábitat disperso/mixto; zonas húmedas/ganaderas.',
+    media:{kind:'svg',caption:'Parcelas cerradas → bocage.',
+      html:'<svg class="svgimg" viewBox="0 0 420 220"><rect width="420" height="220" fill="#0b1622"></rect><g transform="translate(22,22)"><rect x="0" y="0" width="376" height="156" fill="#12283c" stroke="#2a4e6d"></rect><g fill="#214764" stroke="#3c7aa8" stroke-width="3"><rect x="10" y="10" width="80" height="50"></rect><rect x="100" y="10" width="80" height="50"></rect><rect x="190" y="10" width="80" height="50"></rect><rect x="280" y="10" width="80" height="50"></rect><rect x="10" y="70" width="80" height="50"></rect><rect x="100" y="70" width="80" height="50"></rect><rect x="190" y="70" width="80" height="50"></rect><rect x="280" y="70" width="80" height="50"></rect></g></g></svg>'}
+  },
+  {id:23, tag:'Hábitat', type:'mcq',
+    title:'El openfield se asocia habitualmente a…',
+    sub:'', options:[{key:'A',text:'Hábitat disperso'},{key:'B',text:'Hábitat concentrado (pueblos rodeados de campos)'},{key:'C',text:'Megaciudades'}],
+    answer:'B', explain:'Viviendas agrupadas; alrededor campos/pastos.'
+  },
+  {id:24, tag:'Hábitat', type:'mcq',
+    title:'El bocage se relaciona con…',
+    sub:'', options:[{key:'A',text:'Hábitat disperso o mixto'},{key:'B',text:'Hábitat concentrado exclusivo'},{key:'C',text:'Ciudades jardín'}],
+    answer:'A', explain:'Viviendas diseminadas; mosaico de parcelas cerradas.'
+  },
+  {id:25, tag:'Sistema', type:'mcq',
+    title:'La agricultura intensiva…',
+    sub:'', options:[{key:'A',text:'Emplea intensamente medios de producción'},{key:'B',text:'Evita riegos e insumos'},{key:'C',text:'Siempre deja barbechos largos'}],
+    answer:'A', explain:'Busca máximo provecho/ha.'
+  },
+  {id:26, tag:'Sistema', type:'mcq',
+    title:'La agricultura extensiva…',
+    sub:'', options:[{key:'A',text:'Usa muchos insumos/ha'},{key:'B',text:'Deja barbechos y usa recursos naturales con menor inversión'},{key:'C',text:'Solo invernaderos'}],
+    answer:'B', explain:'Compensa menor rendimiento/ha con mucha tierra.'
+  },
+  {id:27, tag:'Agua', type:'mcq',
+    title:'La agricultura de secano…',
+    sub:'', options:[{key:'A',text:'Depende de lluvia; riego puntual en sequía'},{key:'B',text:'Exige goteo continuo'},{key:'C',text:'Solo en invernadero'}],
+    answer:'A', explain:'Regadío = agua artificial (inundación, aspersión, goteo).'
+  },
+  {id:28, tag:'Riego', type:'image-mcq',
+    title:'Sistema: tubería con emisores puntuales al pie de la planta.',
+    sub:'', options:[{key:'A',text:'Aspersión'},{key:'B',text:'Goteo'},{key:'C',text:'Inundación'}],
+    answer:'B', explain:'Minimiza pérdidas por evaporación/escorrentía.',
+    media:{kind:'svg',caption:'Riego localizado por goteo.',
+      html:'<svg class="svgimg" viewBox="0 0 420 220"><rect width="420" height="220" fill="#0b1622"></rect><g transform="translate(30,40)"><rect x="0" y="80" width="360" height="30" fill="#204a68"></rect><rect x="0" y="40" width="360" height="8" fill="#2f7fb5" rx="4" ry="4"></rect><g fill="#6ed5ff"><circle cx="40" cy="44" r="4"></circle><rect x="38" y="48" width="4" height="32"></rect><circle cx="120" cy="44" r="4"></circle><rect x="118" y="48" width="4" height="32"></rect><circle cx="200" cy="44" r="4"></circle><rect x="198" y="48" width="4" height="32"></rect><circle cx="280" cy="44" r="4"></circle><rect x="278" y="48" width="4" height="32"></rect></g></g></svg>'}
+  },
+  {id:29, tag:'Variedad', type:'mcq',
+    title:'El monocultivo consiste en…',
+    sub:'', options:[{key:'A',text:'Dedicarse a un único producto'},{key:'B',text:'Varias especies a la vez'},{key:'C',text:'No cultivar'}],
+    answer:'A', explain:'Simplifica técnicas y maquinaria.'
+  },
+  {id:30, tag:'Variedad', type:'mcq',
+    title:'El policultivo…',
+    sub:'', options:[{key:'A',text:'Reduce la resiliencia'},{key:'B',text:'Aumenta resiliencia y reparte cosechas'},{key:'C',text:'Impide autoconsumo'}],
+    answer:'B', explain:'Típico de pequeñas explotaciones de subsistencia.'
+  },
+  {id:31, tag:'Técnicas', type:'mcq',
+    title:'Práctica avanzada de agricultura de mercado:',
+    sub:'', options:[{key:'A',text:'Semillas de alto rendimiento y control de plagas'},{key:'B',text:'Prohibir transporte'},{key:'C',text:'Evitar mecanización'}],
+    answer:'A', explain:'Se suma a invernaderos y sustratos.'
+  },
+  {id:32, tag:'Logística', type:'mcq',
+    title:'Almacenaje y transporte a gran escala…',
+    sub:'', options:[{key:'A',text:'Encarecen mucho'},{key:'B',text:'Permiten llegar lejos con bajo coste unitario'},{key:'C',text:'Imposibilitan vender'}],
+    answer:'B', explain:'Facilitan comercialización masiva.'
+  },
+  {id:33, tag:'Precios', type:'mcq',
+    title:'Factor que contribuye a precios bajos en países desarrollados:',
+    sub:'', options:[{key:'A',text:'Prohibir exportaciones'},{key:'B',text:'Subvenciones internas y excedentes'},{key:'C',text:'Falta de tecnología'}],
+    answer:'B', explain:'Pueden perjudicar a productores externos.'
+  },
+  {id:34, tag:'Medioambiente', type:'mcq',
+    title:'Impacto negativo de agricultura de mercado:',
+    sub:'', options:[{key:'A',text:'Contaminación de suelos y aguas por químicos'},{key:'B',text:'Regeneración automática'},{key:'C',text:'Menor consumo hídrico siempre'}],
+    answer:'A', explain:'Algunos riegos consumen mucha agua.'
+  },
+  {id:35, tag:'Sociedad', type:'mcq',
+    title:'La mecanización ha favorecido…',
+    sub:'', options:[{key:'A',text:'Despoblamiento rural y envejecimiento'},{key:'B',text:'Crecimiento rural'},{key:'C',text:'Desaparición de ciudades'}],
+    answer:'A', explain:'Menos mano de obra necesaria.'
+  },
+  {id:36, tag:'Ecológica', type:'mcq',
+    title:'Agricultura ecológica…',
+    sub:'', options:[{key:'A',text:'Usa síntesis químicas y OMG'},{key:'B',text:'No usa productos de síntesis ni OMG'},{key:'C',text:'Obliga siempre al monocultivo'}],
+    answer:'B', explain:'Demanda en alza; España destaca en Europa por superficie.'
+  },
+  {id:37, tag:'Desarrollo', type:'mcq',
+    title:'En muchos países en desarrollo conviven…',
+    sub:'', options:[{key:'A',text:'Solo agricultura ecológica'},{key:'B',text:'Agricultura tradicional y agricultura de mercado'},{key:'C',text:'Solo agricultura urbana'}],
+    answer:'B', explain:'Subsistencia y plantaciones de mercado.'
+  },
+  {id:38, tag:'Tradicional', type:'mcq',
+    title:'Característica de la agricultura tradicional:',
+    sub:'', options:[{key:'A',text:'Grandes explotaciones mecanizadas'},{key:'B',text:'Pequeñas parcelas, varias especies, herramientas simples'},{key:'C',text:'Exportación a larga distancia'}],
+    answer:'B', explain:'Baja productividad y fuerte dependencia ambiental.'
+  },
+  {id:39, tag:'Sistemas', type:'image-mcq',
+    title:'Sistema tradicional asiático con parcelas inundadas y mucha mano de obra:',
+    sub:'', options:[{key:'A',text:'Rotación de secano'},{key:'B',text:'Agricultura irrigada monzónica (arroz)'},{key:'C',text:'Roza y quema'}],
+    answer:'B', explain:'Varias cosechas al año.',
+    media:{kind:'svg',caption:'Parcelas inundadas → arroz monzónico.',
+      html:'<svg class="svgimg" viewBox="0 0 420 220"><rect width="420" height="220" fill="#0b1622"></rect><g transform="translate(20,30)"><rect x="0" y="120" width="380" height="60" fill="#204a68"></rect><g fill="#2e7fb5"><rect x="10" y="130" width="90" height="20"></rect><rect x="110" y="130" width="90" height="20"></rect><rect x="210" y="130" width="90" height="20"></rect><rect x="10" y="155" width="90" height="20"></rect><rect x="110" y="155" width="90" height="20"></rect><rect x="210" y="155" width="90" height="20"></rect></g></g></svg>'}
+  },
+  {id:40, tag:'Plantaciones', type:'mcq',
+    title:'Las plantaciones en países en desarrollo se caracterizan por…',
+    sub:'', options:[{key:'A',text:'Exportación, monocultivo y control por grandes empresas'},{key:'B',text:'Autoconsumo y policultivo'},{key:'C',text:'Prohibición de tecnología'}],
+    answer:'A', explain:'Situadas en zonas bien comunicadas; mucha mano de obra e inversión.'
+  }
+];
+
+/* ===== LÓGICA DEL TEST (barajado y sin “comprobar”) — compatible Blogger ===== */
+(function(){
+  function shuffle(arr){
+    for(var i=arr.length-1;i>0;i--){
+      var j = Math.floor(Math.random()*(i+1));
+      var t = arr[i]; arr[i]=arr[j]; arr[j]=t;
+    }
+    return arr;
+  }
+  function deepClone(obj){ return JSON.parse(JSON.stringify(obj)); }
+
+  function buildQuiz(){
+    var pool = deepClone(QUESTION_BANK);
+    shuffle(pool);
+    for(var i=0;i<pool.length;i++){
+      var q = pool[i], originalKey = q.answer;
+      shuffle(q.options);
+      var letters = ['A','B','C'], newAnswer = null;
+      for(var k=0;k<q.options.length;k++){
+        var prevKey = q.options[k].key;
+        q.options[k].key = letters[k];
+        if(prevKey===originalKey){ newAnswer = letters[k]; }
+      }
+      q.answer = newAnswer;
+    }
+    return pool;
+  }
+
+  var QUESTIONS = buildQuiz();
+  var idx = 0;
+  var state = QUESTIONS.map(function(q){ return { id:q.id, user:null, correct:null }; });
+
+  var els = {
+    stLabel: document.getElementById('stLabel'),
+    stCount: document.getElementById('stCount'),
+    stBar:   document.getElementById('stBar'),
+    qTag:    document.getElementById('qTag'),
+    qTitle:  document.getElementById('qTitle'),
+    qSub:    document.getElementById('qSub'),
+    mcqBox:  document.getElementById('mcqBox'),
+    imgWrap: document.getElementById('imgWrap'),
+    imgCap:  document.getElementById('imgCap'),
+    perQFeedback: document.getElementById('perQFeedback'),
+    btnPrev: document.getElementById('btnPrev'),
+    btnNext: document.getElementById('btnNext'),
+    scorePct: document.getElementById('scorePct'),
+    scoreMsg: document.getElementById('scoreMsg'),
+    reviewList: document.getElementById('reviewList'),
+    resultCard: document.getElementById('resultCard'),
+    placeholder: document.getElementById('placeholder')
+  };
+
+  function render(){
+    var q = QUESTIONS[idx];
+
+    // Progreso
+    els.stLabel.textContent = 'Pregunta ' + (idx+1) + ' de ' + QUESTIONS.length;
+    var answered = 0; for(var i=0;i<state.length;i++){ if(state[i].user!==null) answered++; }
+    els.stCount.textContent = 'Respondidas: ' + answered + '/' + QUESTIONS.length;
+    els.stBar.style.width = ((idx)/QUESTIONS.length*100) + '%';
+
+    // Texto
+    els.qTag.textContent = q.tag || 'Pregunta';
+    els.qTitle.textContent = q.title || '';
+    els.qSub.textContent = q.sub || '';
+
+    // Opciones
+    els.mcqBox.innerHTML = '';
+    var frag = document.createDocumentFragment();
+    for(var j=0;j<q.options.length;j++){
+      var op = q.options[j];
+      var div = document.createElement('label');
+      div.className = 'opt';
+      div.innerHTML = '<input type="radio" name="opt" value="'+op.key+'"><span><b>'+op.key+')</b> '+op.text+'</span>';
+      frag.appendChild(div);
+    }
+    els.mcqBox.appendChild(frag);
+
+    // Restaurar selección previa si la hubiera
+    var st = state[idx];
+    if(st.user){
+      var r = els.mcqBox.querySelector('input[value="'+st.user+'"]');
+      if(r) r.checked = true;
+    }
+
+    // Recurso visual
+    els.imgWrap.innerHTML = '';
+    if(q.media){
+      if(q.media.kind==='img'){
+        var im = new Image(); im.src = q.media.src; im.alt = q.media.caption||'';
+        im.style.maxWidth='100%'; im.style.maxHeight='100%';
+        els.imgWrap.appendChild(im);
+      } else if(q.media.kind==='svg'){
+        els.imgWrap.innerHTML = q.media.html;
+      }
+      els.imgCap.textContent = q.media.caption || '';
+    } else {
+      if(els.placeholder){ els.imgWrap.innerHTML = els.placeholder.outerHTML; }
+      els.imgCap.textContent = '—';
+    }
+
+    // Botones/feedback
+    els.btnPrev.disabled = (idx===0);
+    els.btnNext.disabled = false;
+    els.perQFeedback.classList.add('hidden');
+    els.perQFeedback.textContent = '';
+    els.resultCard.classList.add('hidden');
+  }
+
+  function saveCurrentOrWarn(goNext){
+    var q = QUESTIONS[idx];
+    var sel = document.querySelector('input[name="opt"]:checked');
+    if(!sel){
+      // aviso suave para fomentar que contesten antes de avanzar
+      els.perQFeedback.classList.remove('hidden');
+      els.perQFeedback.innerHTML = '<span class="warn">⚠</span> Marca una opción para continuar.';
+      return false;
+    }
+    var user = sel.value;
+    var isOk = (user === q.answer);
+    state[idx] = { id:q.id, user:user, correct:isOk };
+    if(goNext){ nextQ(); } // sin mostrar si está bien o mal
+    return true;
+  }
+
+  function nextQ(){ if(idx<QUESTIONS.length-1){ idx++; render(); } else { finish(); } }
+  function prevQ(){ if(idx>0){ idx--; render(); } }
+
+  function finish(){
+    var answered = 0, correct = 0;
+    for(var i=0;i<state.length;i++){ if(state[i].user!==null) answered++; if(state[i].correct===true) correct++; }
+    var pct = Math.round((correct/QUESTIONS.length)*100);
+    els.scorePct.textContent = pct + '%';
+    els.scoreMsg.textContent = answered<QUESTIONS.length
+      ? 'Has dejado preguntas sin responder.'
+      : (pct>=80 ? '¡Excelente!' : (pct>=60 ? 'Bien, revisa lo fallado.' : 'Necesitas repasar.'));
+
+    // Lista de fallos
+    els.reviewList.innerHTML = '';
+    for(var k=0;k<QUESTIONS.length;k++){
+      var st = state[k]; var q = QUESTIONS[k];
+      if(!st || st.correct===true) continue;
+      // texto de la correcta
+      var rightTxt = '';
+      for(var m=0;m<q.options.length;m++){
+        if(q.options[m].key===q.answer){ rightTxt = q.options[m].key+') '+q.options[m].text; break; }
+      }
+      var userTxt = (st.user ? st.user : '—');
+      var div = document.createElement('div');
+      div.className = 'item wrong';
+      div.innerHTML = '<b>'+(k+1)+'. '+q.title+'</b><br>'+
+        '<span class="bad">Tu respuesta:</span> '+userTxt+' · '+
+        '<span class="ok">Correcta:</span> '+rightTxt+'<br>'+
+        '<span class="muted">'+(q.explain||'')+'</span>';
+      els.reviewList.appendChild(div);
+    }
+
+    els.resultCard.classList.remove('hidden');
+    els.resultCard.scrollIntoView({behavior:'smooth'});
+  }
+
+  // Eventos
+  document.getElementById('btnNext').addEventListener('click', function(){
+    // exige marcar respuesta antes de avanzar
+    saveCurrentOrWarn(true);
+  });
+  document.getElementById('btnPrev').addEventListener('click', function(){
+    // permitir volver atrás sin exigir selección nueva
+    prevQ();
+  });
+
+  document.getElementById('btnRetry').addEventListener('click', function(){
+    QUESTIONS = buildQuiz();
+    idx = 0;
+    state = QUESTIONS.map(function(q){ return { id:q.id, user:null, correct:null }; });
+    document.getElementById('resultCard').classList.add('hidden');
+    render();
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+  document.getElementById('btnScrollTop').addEventListener('click', function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+
+  // Teclado: avanzar solo si hay selección
+  document.addEventListener('keydown', function(e){
+    var tag = (e.target.tagName||'').toLowerCase();
+    if(tag!=='input'){
+      if(e.key==='ArrowRight'){ saveCurrentOrWarn(true); }
+      if(e.key==='ArrowLeft'){ prevQ(); }
+    }
+  });
+
+  // Arranque
+  if(document.readyState === 'loading'){ document.addEventListener('DOMContentLoaded', render); } else { render(); }
+})();
+</script>
+<!-- ====== FIN TEST ====== -->
