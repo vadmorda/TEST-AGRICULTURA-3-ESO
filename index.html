@@ -91,217 +91,287 @@
 /* ===== BANCO DE PREGUNTAS (40) =====
    Campos: id, tag, type('mcq'|'image-mcq'), title, sub, options[{key,text}], answer('A'|'B'|'C'), media{kind:'svg'|'img', html|src, caption}, explain
 */
+<script>
 var QUESTION_BANK = [
   {id:1, tag:'Concepto', type:'mcq',
     title:'El sector primario incluye…',
     sub:'Elige la opción más completa.',
     options:[{key:'A',text:'Agricultura y ganadería'},{key:'B',text:'Agricultura, ganadería, pesca y explotación forestal'},{key:'C',text:'Industria agroalimentaria y turismo'}],
-    answer:'B', explain:'Obtiene recursos directamente de la naturaleza.'
+    answer:'B', explain:'Obtiene recursos directamente de la naturaleza.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Sector+primario',caption:'Esquema del sector primario: agricultura, ganadería, pesca y explotación forestal.'}
   },
   {id:2, tag:'Importancia', type:'mcq',
     title:'La actividad más importante del sector primario por población dependiente es…',
-    sub:'', options:[{key:'A',text:'Ganadería'},{key:'B',text:'Agricultura'},{key:'C',text:'Pesca'}],
-    answer:'B', explain:'Cerca del 40% depende de la agricultura.'
+    sub:'',
+    options:[{key:'A',text:'Ganadería'},{key:'B',text:'Agricultura'},{key:'C',text:'Pesca'}],
+    answer:'B', explain:'Cerca del 40% depende de la agricultura.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Agricultura',caption:'Campo de cultivo que representa la importancia de la agricultura en el empleo.'}
   },
   {id:3, tag:'Tendencia', type:'mcq',
     title:'Desde hace décadas, el sector primario mundial…',
-    sub:'', options:[{key:'A',text:'Aumenta su peso en empleo y PIB'},{key:'B',text:'Retrocede en empleo y PIB relativos'},{key:'C',text:'Permanece estable'}],
-    answer:'B', explain:'Retrocede frente a industria y servicios.'
+    sub:'',
+    options:[{key:'A',text:'Aumenta su peso en empleo y PIB'},{key:'B',text:'Retrocede en empleo y PIB relativos'},{key:'C',text:'Permanece estable'}],
+    answer:'B', explain:'Retrocede frente a industria y servicios.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Tendencia+sector+primario',caption:'Gráfico esquemático del descenso del peso del sector primario en el PIB y el empleo.'}
   },
   {id:4, tag:'Productividad', type:'mcq',
     title:'El aumento de productividad agraria se relaciona con…',
-    sub:'', options:[{key:'A',text:'Tecnificación y mecanización'},{key:'B',text:'Menos conocimiento'},{key:'C',text:'Más altitud'}],
-    answer:'A', explain:'La tecnología eleva rendimientos.'
+    sub:'',
+    options:[{key:'A',text:'Tecnificación y mecanización'},{key:'B',text:'Menos conocimiento'},{key:'C',text:'Más altitud'}],
+    answer:'A', explain:'La tecnología eleva rendimientos.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Maquinaria+agricola',caption:'Tractor moderno trabajando un campo cultivado.'}
   },
   {id:5, tag:'Altos ingresos', type:'mcq',
     title:'En países de altos ingresos, el empleo en el sector primario suele ser…',
-    sub:'', options:[{key:'A',text:'1–3% del empleo'},{key:'B',text:'≈20%'},{key:'C',text:'>50%'}],
-    answer:'A', explain:'PIB <2% y productividad muy alta.'
+    sub:'',
+    options:[{key:'A',text:'1–3% del empleo'},{key:'B',text:'≈20%'},{key:'C',text:'>50%'}],
+    answer:'A', explain:'PIB <2% y productividad muy alta.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Pais+desarrollado',caption:'Granja muy mecanizada típica de un país desarrollado.'}
   },
   {id:6, tag:'Medianos ingresos', type:'mcq',
     title:'En países de ingresos medios, la aportación al PIB del sector es…',
-    sub:'', options:[{key:'A',text:'<2%'},{key:'B',text:'~8% (o algo menos)'},{key:'C',text:'>20%'}],
-    answer:'B', explain:'Con empleo medio cercano al 29%.'
+    sub:'',
+    options:[{key:'A',text:'<2%'},{key:'B',text:'~8% (o algo menos)'},{key:'C',text:'>20%'}],
+    answer:'B', explain:'Con empleo medio cercano al 29%.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Ingresos+medios',caption:'Paisaje agrario en país emergente con mezcla de técnicas modernas y tradicionales.'}
   },
   {id:7, tag:'Bajos ingresos', type:'mcq',
     title:'En países de bajos ingresos, el empleo en el sector primario…',
-    sub:'', options:[{key:'A',text:'<5%'},{key:'B',text:'~20%'},{key:'C',text:'~60% (y >80% en los más pobres)'}],
-    answer:'C', explain:'Y aporta >20% del PIB.'
+    sub:'',
+    options:[{key:'A',text:'<5%'},{key:'B',text:'~20%'},{key:'C',text:'~60% (y >80% en los más pobres)'}],
+    answer:'C', explain:'Y aporta >20% del PIB.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Pais+pobre+agrario',caption:'Pequeños campos y trabajadores manuales en un país de bajos ingresos.'}
   },
   {id:8, tag:'Contrastes', type:'mcq',
     title:'Los contrastes nacionales del sector primario se deben sobre todo a…',
-    sub:'', options:[{key:'A',text:'Momento/forma de industrialización'},{key:'B',text:'Huso horario'},{key:'C',text:'Color del suelo'}],
-    answer:'A', explain:'Industrialización distinta por países.'
+    sub:'',
+    options:[{key:'A',text:'Momento/forma de industrialización'},{key:'B',text:'Huso horario'},{key:'C',text:'Color del suelo'}],
+    answer:'A', explain:'Industrialización distinta por países.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Industrializacion',caption:'Mapa esquemático que contrasta países tempranamente industrializados y otros mas atrasados.'}
   },
   {id:9, tag:'Mercado', type:'mcq',
     title:'La agricultura de mercado busca principalmente…',
-    sub:'', options:[{key:'A',text:'Autoconsumo'},{key:'B',text:'Maximizar beneficio con venta'},{key:'C',text:'Evitar tecnología'}],
-    answer:'B', explain:'Se orienta a la venta.'
+    sub:'',
+    options:[{key:'A',text:'Autoconsumo'},{key:'B',text:'Maximizar beneficio con venta'},{key:'C',text:'Evitar tecnología'}],
+    answer:'B', explain:'Se orienta a la venta.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Agricultura+de+mercado',caption:'Campo extensivo destinado a la venta en mercados nacionales e internacionales.'}
   },
   {id:10, tag:'Efectos', type:'mcq',
     title:'Consecuencia positiva frecuente de la agricultura de mercado:',
-    sub:'', options:[{key:'A',text:'Precios altos por escasez'},{key:'B',text:'Bajada de precios por excedentes'},{key:'C',text:'Sin mayoristas'}],
-    answer:'B', explain:'Alta productividad → excedentes.'
+    sub:'',
+    options:[{key:'A',text:'Precios altos por escasez'},{key:'B',text:'Bajada de precios por excedentes'},{key:'C',text:'Sin mayoristas'}],
+    answer:'B', explain:'Alta productividad → excedentes.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Excedentes+agrarios',caption:'Almacenes llenos de productos agrícolas listos para su distribución.'}
   },
   {id:11, tag:'Clima', type:'mcq',
     title:'Límite climático típico para la agricultura:',
-    sub:'', options:[{key:'A',text:'Frío extremo'},{key:'B',text:'Brisas suaves'},{key:'C',text:'Cielos despejados'}],
-    answer:'A', explain:'También calor extremo, humedad excesiva y aridez.'
+    sub:'',
+    options:[{key:'A',text:'Frío extremo'},{key:'B',text:'Brisas suaves'},{key:'C',text:'Cielos despejados'}],
+    answer:'A', explain:'También calor extremo, humedad excesiva y aridez.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Limites+climaticos',caption:'Mapa climático con zonas frías, áridas y húmedas poco favorables a la agricultura.'}
   },
   {id:12, tag:'Clima', type:'mcq',
     title:'La aridez limita porque…',
-    sub:'', options:[{key:'A',text:'Baja el oxígeno del aire'},{key:'B',text:'Precipitaciones escasas e irregulares'},{key:'C',text:'Genera más setos'}],
-    answer:'B', explain:'El agua debe distribuirse durante el ciclo.'
+    sub:'',
+    options:[{key:'A',text:'Baja el oxígeno del aire'},{key:'B',text:'Precipitaciones escasas e irregulares'},{key:'C',text:'Genera más setos'}],
+    answer:'B', explain:'El agua debe distribuirse durante el ciclo.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Aridez',caption:'Paisaje semiárido con cultivos muy dispersos por falta de agua.'}
   },
   {id:13, tag:'Relieve', type:'mcq',
     title:'Altitud más favorable, en principio, para cultivar:',
-    sub:'', options:[{key:'A',text:'<200 m'},{key:'B',text:'1500–2500 m'},{key:'C',text:'>3000 m'}],
-    answer:'A', explain:'La temperatura disminuye con la altitud.'
+    sub:'',
+    options:[{key:'A',text:'<200 m'},{key:'B',text:'1500–2500 m'},{key:'C',text:'>3000 m'}],
+    answer:'A', explain:'La temperatura disminuye con la altitud.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Llanura+baja+altitud',caption:'Llanura de baja altitud dedicada al cultivo extensivo.'}
   },
   {id:14, tag:'Relieve', type:'mcq',
     title:'Pendiente máxima habitual para cultivo:',
-    sub:'', options:[{key:'A',text:'≈12°'},{key:'B',text:'≈25°'},{key:'C',text:'≈45°'}],
-    answer:'A', explain:'Llanuras y suaves pendientes facilitan mecanización.'
+    sub:'',
+    options:[{key:'A',text:'≈12°'},{key:'B',text:'≈25°'},{key:'C',text:'≈45°'}],
+    answer:'A', explain:'Llanuras y suaves pendientes facilitan mecanización.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Pendiente+suave',caption:'Suaves ondulaciones del terreno que permiten el uso de maquinaria agrícola.'}
   },
   {id:15, tag:'Relieve', type:'image-mcq',
     title:'Técnica que permite cultivar laderas reduciendo la erosión:',
-    sub:'', options:[{key:'A',text:'Terrazas o bancales'},{key:'B',text:'Inundación'},{key:'C',text:'Barbecho'}],
+    sub:'',
+    options:[{key:'A',text:'Terrazas o bancales'},{key:'B',text:'Inundación'},{key:'C',text:'Barbecho'}],
     answer:'A', explain:'Bancales reducen escorrentía.',
-    media:{kind:'svg',caption:'Plataformas horizontales en ladera.',
-      html:'<svg class="svgimg" viewBox="0 0 420 220"><rect width="420" height="220" fill="#0b1622"></rect><g transform="translate(30,30)"><polygon points="0,140 360,60 360,160 0,160" fill="#17324a"></polygon><g fill="#275676" stroke="#3b7aa5"><rect x="10" y="120" width="320" height="10"></rect><rect x="30" y="100" width="300" height="10"></rect><rect x="70" y="80" width="260" height="10"></rect></g></g></svg>'}
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Terrazas+de+cultivo',caption:'Laderas de montaña transformadas en terrazas agrícolas.'}
   },
   {id:16, tag:'Suelo', type:'mcq',
     title:'La textura y porosidad del suelo condicionan…',
-    sub:'', options:[{key:'A',text:'La altitud'},{key:'B',text:'Retención de agua y oxígeno disponible'},{key:'C',text:'El huso horario'}],
-    answer:'B', explain:'Junto con composición y materia orgánica.'
+    sub:'',
+    options:[{key:'A',text:'La altitud'},{key:'B',text:'Retención de agua y oxígeno disponible'},{key:'C',text:'El huso horario'}],
+    answer:'B', explain:'Junto con composición y materia orgánica.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Perfil+de+suelo',caption:'Corte esquemático del suelo mostrando horizontes, poros y raíces.'}
   },
   {id:17, tag:'Suelo', type:'mcq',
     title:'Mejorar un suelo agrícola puede lograrse con…',
-    sub:'', options:[{key:'A',text:'Fertilización/compost, riego y corrección de acidez'},{key:'B',text:'Aumentar la pendiente'},{key:'C',text:'Elevar la altitud'}],
-    answer:'A', explain:'Se mejora textura, fertilidad y pH.'
+    sub:'',
+    options:[{key:'A',text:'Fertilización/compost, riego y corrección de acidez'},{key:'B',text:'Aumentar la pendiente'},{key:'C',text:'Elevar la altitud'}],
+    answer:'A', explain:'Se mejora textura, fertilidad y pH.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Mejora+del+suelo',caption:'Aporte de compost y enmiendas en un campo de cultivo.'}
   },
   {id:18, tag:'Espacios', type:'mcq',
     title:'Regiones no aptas por sí mismas para agricultura:',
-    sub:'', options:[{key:'A',text:'Polos, desiertos y selvas tropicales'},{key:'B',text:'Valles fluviales'},{key:'C',text:'Mesetas templadas'}],
-    answer:'A', explain:'Hoy es posible con invernaderos, pero requiere inversión alta.'
+    sub:'',
+    options:[{key:'A',text:'Polos, desiertos y selvas tropicales'},{key:'B',text:'Valles fluviales'},{key:'C',text:'Mesetas templadas'}],
+    answer:'A', explain:'Hoy es posible con invernaderos, pero requiere inversión alta.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Espacios+no+aptos',caption:'Mapa que señala polos, grandes desiertos y selvas tropicales como zonas poco aptas.'}
   },
   {id:19, tag:'Explotación', type:'mcq',
     title:'Explotación agraria es…',
-    sub:'', options:[{key:'A',text:'Cualquier área urbana'},{key:'B',text:'Conjunto de tierras/granjas trabajadas por una persona o empresa'},{key:'C',text:'Un huerto escolar'}],
-    answer:'B', explain:'Puede ser agrícola/ganadera/forestal/mixta.'
+    sub:'',
+    options:[{key:'A',text:'Cualquier área urbana'},{key:'B',text:'Conjunto de tierras/granjas trabajadas por una persona o empresa'},{key:'C',text:'Un huerto escolar'}],
+    answer:'B', explain:'Puede ser agrícola/ganadera/forestal/mixta.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Explotacion+agraria',caption:'Plano sencillo de una explotación agraria con campos y construcciones.'}
   },
   {id:20, tag:'Parcela', type:'mcq',
     title:'La parcela es…',
-    sub:'', options:[{key:'A',text:'División elemental del paisaje agrario delimitada por lindes'},{key:'B',text:'Un país'},{key:'C',text:'Un barrio'}],
-    answer:'A', explain:'Extensión rústica continua de un titular.'
+    sub:'',
+    options:[{key:'A',text:'División elemental del paisaje agrario delimitada por lindes'},{key:'B',text:'Un país'},{key:'C',text:'Un barrio'}],
+    answer:'A', explain:'Extensión rústica continua de un titular.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Parcelas',caption:'Vista aérea esquemática de un mosaico de parcelas agrarias.'}
   },
   {id:21, tag:'Paisaje', type:'image-mcq',
     title:'Identifica el paisaje: parcelas abiertas, sin cercas, franjas amplias.',
-    sub:'', options:[{key:'A',text:'Openfield'},{key:'B',text:'Bocage'},{key:'C',text:'Plantación'}],
+    sub:'',
+    options:[{key:'A',text:'Openfield'},{key:'B',text:'Bocage'},{key:'C',text:'Plantación'}],
     answer:'A', explain:'Openfield: hábitat concentrado; grandes llanuras cerealistas.',
-    media:{kind:'svg',caption:'Campos abiertos y extensos.',
-      html:'<svg class="svgimg" viewBox="0 0 420 220"><rect width="420" height="220" fill="#0b1622"></rect><g transform="translate(20,20)"><rect x="0" y="0" width="380" height="160" fill="#19334a" stroke="#2a4e6d"></rect><rect x="10" y="10" width="360" height="30" fill="#2a5b80"></rect><rect x="10" y="50" width="360" height="30" fill="#285474"></rect><rect x="10" y="90" width="360" height="30" fill="#2a5b80"></rect><rect x="10" y="130" width="360" height="20" fill="#285474"></rect></g></svg>'}
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Paisaje+openfield',caption:'Grandes campos abiertos de cereal sin cercas ni setos.'}
   },
   {id:22, tag:'Paisaje', type:'image-mcq',
     title:'Identifica el paisaje: setos/muros delimitan pequeñas parcelas irregulares.',
-    sub:'', options:[{key:'A',text:'Bocage'},{key:'B',text:'Openfield'},{key:'C',text:'Desierto'}],
+    sub:'',
+    options:[{key:'A',text:'Bocage'},{key:'B',text:'Openfield'},{key:'C',text:'Desierto'}],
     answer:'A', explain:'Bocage: hábitat disperso/mixto; zonas húmedas/ganaderas.',
-    media:{kind:'svg',caption:'Parcelas cerradas → bocage.',
-      html:'<svg class="svgimg" viewBox="0 0 420 220"><rect width="420" height="220" fill="#0b1622"></rect><g transform="translate(22,22)"><rect x="0" y="0" width="376" height="156" fill="#12283c" stroke="#2a4e6d"></rect><g fill="#214764" stroke="#3c7aa8" stroke-width="3"><rect x="10" y="10" width="80" height="50"></rect><rect x="100" y="10" width="80" height="50"></rect><rect x="190" y="10" width="80" height="50"></rect><rect x="280" y="10" width="80" height="50"></rect><rect x="10" y="70" width="80" height="50"></rect><rect x="100" y="70" width="80" height="50"></rect><rect x="190" y="70" width="80" height="50"></rect><rect x="280" y="70" width="80" height="50"></rect></g></g></svg>'}
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Paisaje+bocage',caption:'Parcelas pequeñas separadas por setos vivos y árboles.'}
   },
   {id:23, tag:'Hábitat', type:'mcq',
     title:'El openfield se asocia habitualmente a…',
-    sub:'', options:[{key:'A',text:'Hábitat disperso'},{key:'B',text:'Hábitat concentrado (pueblos rodeados de campos)'},{key:'C',text:'Megaciudades'}],
-    answer:'B', explain:'Viviendas agrupadas; alrededor campos/pastos.'
+    sub:'',
+    options:[{key:'A',text:'Hábitat disperso'},{key:'B',text:'Hábitat concentrado (pueblos rodeados de campos)'},{key:'C',text:'Megaciudades'}],
+    answer:'B', explain:'Viviendas agrupadas; alrededor campos/pastos.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Habitat+concentrado',caption:'Pueblo compacto rodeado por grandes campos abiertos.'}
   },
   {id:24, tag:'Hábitat', type:'mcq',
     title:'El bocage se relaciona con…',
-    sub:'', options:[{key:'A',text:'Hábitat disperso o mixto'},{key:'B',text:'Hábitat concentrado exclusivo'},{key:'C',text:'Ciudades jardín'}],
-    answer:'A', explain:'Viviendas diseminadas; mosaico de parcelas cerradas.'
+    sub:'',
+    options:[{key:'A',text:'Hábitat disperso o mixto'},{key:'B',text:'Hábitat concentrado exclusivo'},{key:'C',text:'Ciudades jardín'}],
+    answer:'A', explain:'Viviendas diseminadas; mosaico de parcelas cerradas.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Habitat+disperso',caption:'Casas aisladas entre parcelas pequeñas separadas por setos.'}
   },
   {id:25, tag:'Sistema', type:'mcq',
     title:'La agricultura intensiva…',
-    sub:'', options:[{key:'A',text:'Emplea intensamente medios de producción'},{key:'B',text:'Evita riegos e insumos'},{key:'C',text:'Siempre deja barbechos largos'}],
-    answer:'A', explain:'Busca máximo provecho/ha.'
+    sub:'',
+    options:[{key:'A',text:'Emplea intensamente medios de producción'},{key:'B',text:'Evita riegos e insumos'},{key:'C',text:'Siempre deja barbechos largos'}],
+    answer:'A', explain:'Busca máximo provecho/ha.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Agricultura+intensiva',caption:'Invernaderos y cultivos muy densos con alta inversión de insumos.'}
   },
   {id:26, tag:'Sistema', type:'mcq',
     title:'La agricultura extensiva…',
-    sub:'', options:[{key:'A',text:'Usa muchos insumos/ha'},{key:'B',text:'Deja barbechos y usa recursos naturales con menor inversión'},{key:'C',text:'Solo invernaderos'}],
-    answer:'B', explain:'Compensa menor rendimiento/ha con mucha tierra.'
+    sub:'',
+    options:[{key:'A',text:'Usa muchos insumos/ha'},{key:'B',text:'Deja barbechos y usa recursos naturales con menor inversión'},{key:'C',text:'Solo invernaderos'}],
+    answer:'B', explain:'Compensa menor rendimiento/ha con mucha tierra.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Agricultura+extensiva',caption:'Grandes superficies de cultivo con baja densidad y poca inversión.'}
   },
   {id:27, tag:'Agua', type:'mcq',
     title:'La agricultura de secano…',
-    sub:'', options:[{key:'A',text:'Depende de lluvia; riego puntual en sequía'},{key:'B',text:'Exige goteo continuo'},{key:'C',text:'Solo en invernadero'}],
-    answer:'A', explain:'Regadío = agua artificial (inundación, aspersión, goteo).'
+    sub:'',
+    options:[{key:'A',text:'Depende de lluvia; riego puntual en sequía'},{key:'B',text:'Exige goteo continuo'},{key:'C',text:'Solo en invernadero'}],
+    answer:'A', explain:'Regadío = agua artificial (inundación, aspersión, goteo).',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Secano',caption:'Cultivos de secano en clima mediterraneo con suelos pardos y arbolado disperso.'}
   },
   {id:28, tag:'Riego', type:'image-mcq',
     title:'Sistema: tubería con emisores puntuales al pie de la planta.',
-    sub:'', options:[{key:'A',text:'Aspersión'},{key:'B',text:'Goteo'},{key:'C',text:'Inundación'}],
+    sub:'',
+    options:[{key:'A',text:'Aspersión'},{key:'B',text:'Goteo'},{key:'C',text:'Inundación'}],
     answer:'B', explain:'Minimiza pérdidas por evaporación/escorrentía.',
-    media:{kind:'svg',caption:'Riego localizado por goteo.',
-      html:'<svg class="svgimg" viewBox="0 0 420 220"><rect width="420" height="220" fill="#0b1622"></rect><g transform="translate(30,40)"><rect x="0" y="80" width="360" height="30" fill="#204a68"></rect><rect x="0" y="40" width="360" height="8" fill="#2f7fb5" rx="4" ry="4"></rect><g fill="#6ed5ff"><circle cx="40" cy="44" r="4"></circle><rect x="38" y="48" width="4" height="32"></rect><circle cx="120" cy="44" r="4"></circle><rect x="118" y="48" width="4" height="32"></rect><circle cx="200" cy="44" r="4"></circle><rect x="198" y="48" width="4" height="32"></rect><circle cx="280" cy="44" r="4"></circle><rect x="278" y="48" width="4" height="32"></rect></g></g></svg>'}
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Riego+por+goteo',caption:'Tubos de riego por goteo junto a las líneas de cultivo.'}
   },
   {id:29, tag:'Variedad', type:'mcq',
     title:'El monocultivo consiste en…',
-    sub:'', options:[{key:'A',text:'Dedicarse a un único producto'},{key:'B',text:'Varias especies a la vez'},{key:'C',text:'No cultivar'}],
-    answer:'A', explain:'Simplifica técnicas y maquinaria.'
+    sub:'',
+    options:[{key:'A',text:'Dedicarse a un único producto'},{key:'B',text:'Varias especies a la vez'},{key:'C',text:'No cultivar'}],
+    answer:'A', explain:'Simplifica técnicas y maquinaria.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Monocultivo',caption:'Gran extensión de un mismo cultivo, por ejemplo solo maiz o solo trigo.'}
   },
   {id:30, tag:'Variedad', type:'mcq',
     title:'El policultivo…',
-    sub:'', options:[{key:'A',text:'Reduce la resiliencia'},{key:'B',text:'Aumenta resiliencia y reparte cosechas'},{key:'C',text:'Impide autoconsumo'}],
-    answer:'B', explain:'Típico de pequeñas explotaciones de subsistencia.'
+    sub:'',
+    options:[{key:'A',text:'Reduce la resiliencia'},{key:'B',text:'Aumenta resiliencia y reparte cosechas'},{key:'C',text:'Impide autoconsumo'}],
+    answer:'B', explain:'Típico de pequeñas explotaciones de subsistencia.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Policultivo',caption:'Parcela con varias especies mezcladas (hortalizas, frutales, leguminosas).'}
   },
   {id:31, tag:'Técnicas', type:'mcq',
     title:'Práctica avanzada de agricultura de mercado:',
-    sub:'', options:[{key:'A',text:'Semillas de alto rendimiento y control de plagas'},{key:'B',text:'Prohibir transporte'},{key:'C',text:'Evitar mecanización'}],
-    answer:'A', explain:'Se suma a invernaderos y sustratos.'
+    sub:'',
+    options:[{key:'A',text:'Semillas de alto rendimiento y control de plagas'},{key:'B',text:'Prohibir transporte'},{key:'C',text:'Evitar mecanización'}],
+    answer:'A', explain:'Se suma a invernaderos y sustratos.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Tecnicas+avanzadas',caption:'Uso de invernaderos, control de plagas y semillas seleccionadas.'}
   },
   {id:32, tag:'Logística', type:'mcq',
     title:'Almacenaje y transporte a gran escala…',
-    sub:'', options:[{key:'A',text:'Encarecen mucho'},{key:'B',text:'Permiten llegar lejos con bajo coste unitario'},{key:'C',text:'Imposibilitan vender'}],
-    answer:'B', explain:'Facilitan comercialización masiva.'
+    sub:'',
+    options:[{key:'A',text:'Encarecen mucho'},{key:'B',text:'Permiten llegar lejos con bajo coste unitario'},{key:'C',text:'Imposibilitan vender'}],
+    answer:'B', explain:'Facilitan comercialización masiva.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Logistica+agraria',caption:'Camiones y contenedores cargando productos agrícolas en grandes almacenes.'}
   },
   {id:33, tag:'Precios', type:'mcq',
     title:'Factor que contribuye a precios bajos en países desarrollados:',
-    sub:'', options:[{key:'A',text:'Prohibir exportaciones'},{key:'B',text:'Subvenciones internas y excedentes'},{key:'C',text:'Falta de tecnología'}],
-    answer:'B', explain:'Pueden perjudicar a productores externos.'
+    sub:'',
+    options:[{key:'A',text:'Prohibir exportaciones'},{key:'B',text:'Subvenciones internas y excedentes'},{key:'C',text:'Falta de tecnología'}],
+    answer:'B', explain:'Pueden perjudicar a productores externos.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Subvenciones',caption:'Esquema que relaciona subvenciones agrarias, excedentes y caída de precios.'}
   },
   {id:34, tag:'Medioambiente', type:'mcq',
     title:'Impacto negativo de agricultura de mercado:',
-    sub:'', options:[{key:'A',text:'Contaminación de suelos y aguas por químicos'},{key:'B',text:'Regeneración automática'},{key:'C',text:'Menor consumo hídrico siempre'}],
-    answer:'A', explain:'Algunos riegos consumen mucha agua.'
+    sub:'',
+    options:[{key:'A',text:'Contaminación de suelos y aguas por químicos'},{key:'B',text:'Regeneración automática'},{key:'C',text:'Menor consumo hídrico siempre'}],
+    answer:'A', explain:'Algunos riegos consumen mucha agua.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Impacto+ambiental',caption:'Campo con uso intensivo de fertilizantes y riesgo de contaminación de aguas.'}
   },
   {id:35, tag:'Sociedad', type:'mcq',
     title:'La mecanización ha favorecido…',
-    sub:'', options:[{key:'A',text:'Despoblamiento rural y envejecimiento'},{key:'B',text:'Crecimiento rural'},{key:'C',text:'Desaparición de ciudades'}],
-    answer:'A', explain:'Menos mano de obra necesaria.'
+    sub:'',
+    options:[{key:'A',text:'Despoblamiento rural y envejecimiento'},{key:'B',text:'Crecimiento rural'},{key:'C',text:'Desaparición de ciudades'}],
+    answer:'A', explain:'Menos mano de obra necesaria.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Mecanizacion+y+exodo',caption:'Tractor moderno en primer plano y pueblo rural pequeño al fondo.'}
   },
   {id:36, tag:'Ecológica', type:'mcq',
     title:'Agricultura ecológica…',
-    sub:'', options:[{key:'A',text:'Usa síntesis químicas y OMG'},{key:'B',text:'No usa productos de síntesis ni OMG'},{key:'C',text:'Obliga siempre al monocultivo'}],
-    answer:'B', explain:'Demanda en alza; España destaca en Europa por superficie.'
+    sub:'',
+    options:[{key:'A',text:'Usa síntesis químicas y OMG'},{key:'B',text:'No usa productos de síntesis ni OMG'},{key:'C',text:'Obliga siempre al monocultivo'}],
+    answer:'B', explain:'Demanda en alza; España destaca en Europa por superficie.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Agricultura+ecologica',caption:'Huerto ecológico con cultivos variados y sin uso de productos químicos.'}
   },
   {id:37, tag:'Desarrollo', type:'mcq',
     title:'En muchos países en desarrollo conviven…',
-    sub:'', options:[{key:'A',text:'Solo agricultura ecológica'},{key:'B',text:'Agricultura tradicional y agricultura de mercado'},{key:'C',text:'Solo agricultura urbana'}],
-    answer:'B', explain:'Subsistencia y plantaciones de mercado.'
+    sub:'',
+    options:[{key:'A',text:'Solo agricultura ecológica'},{key:'B',text:'Agricultura tradicional y agricultura de mercado'},{key:'C',text:'Solo agricultura urbana'}],
+    answer:'B', explain:'Subsistencia y plantaciones de mercado.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Dualidad+agraria',caption:'Pequeñas parcelas tradicionales junto a grandes plantaciones comerciales.'}
   },
   {id:38, tag:'Tradicional', type:'mcq',
     title:'Característica de la agricultura tradicional:',
-    sub:'', options:[{key:'A',text:'Grandes explotaciones mecanizadas'},{key:'B',text:'Pequeñas parcelas, varias especies, herramientas simples'},{key:'C',text:'Exportación a larga distancia'}],
-    answer:'B', explain:'Baja productividad y fuerte dependencia ambiental.'
+    sub:'',
+    options:[{key:'A',text:'Grandes explotaciones mecanizadas'},{key:'B',text:'Pequeñas parcelas, varias especies, herramientas simples'},{key:'C',text:'Exportación a larga distancia'}],
+    answer:'B', explain:'Baja productividad y fuerte dependencia ambiental.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Agricultura+tradicional',caption:'Campesino trabajando a mano en una pequeña parcela con varios cultivos.'}
   },
   {id:39, tag:'Sistemas', type:'image-mcq',
     title:'Sistema tradicional asiático con parcelas inundadas y mucha mano de obra:',
-    sub:'', options:[{key:'A',text:'Rotación de secano'},{key:'B',text:'Agricultura irrigada monzónica (arroz)'},{key:'C',text:'Roza y quema'}],
+    sub:'',
+    options:[{key:'A',text:'Rotación de secano'},{key:'B',text:'Agricultura irrigada monzónica (arroz)'},{key:'C',text:'Roza y quema'}],
     answer:'B', explain:'Varias cosechas al año.',
-    media:{kind:'svg',caption:'Parcelas inundadas → arroz monzónico.',
-      html:'<svg class="svgimg" viewBox="0 0 420 220"><rect width="420" height="220" fill="#0b1622"></rect><g transform="translate(20,30)"><rect x="0" y="120" width="380" height="60" fill="#204a68"></rect><g fill="#2e7fb5"><rect x="10" y="130" width="90" height="20"></rect><rect x="110" y="130" width="90" height="20"></rect><rect x="210" y="130" width="90" height="20"></rect><rect x="10" y="155" width="90" height="20"></rect><rect x="110" y="155" width="90" height="20"></rect><rect x="210" y="155" width="90" height="20"></rect></g></g></svg>'}
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Arroz+monzonico',caption:'Campos de arroz inundados en terrazas con trabajadores en el agua.'}
   },
   {id:40, tag:'Plantaciones', type:'mcq',
     title:'Las plantaciones en países en desarrollo se caracterizan por…',
-    sub:'', options:[{key:'A',text:'Exportación, monocultivo y control por grandes empresas'},{key:'B',text:'Autoconsumo y policultivo'},{key:'C',text:'Prohibición de tecnología'}],
-    answer:'A', explain:'Situadas en zonas bien comunicadas; mucha mano de obra e inversión.'
+    sub:'',
+    options:[{key:'A',text:'Exportación, monocultivo y control por grandes empresas'},{key:'B',text:'Autoconsumo y policultivo'},{key:'C',text:'Prohibición de tecnología'}],
+    answer:'A', explain:'Situadas en zonas bien comunicadas; mucha mano de obra e inversión.',
+    media:{kind:'img',src:'https://placehold.co/420x220?text=Plantacion+tropical',caption:'Gran plantación de producto tropical (cafe, cacao, banana) orientada a la exportación.'}
   }
 ];
 
